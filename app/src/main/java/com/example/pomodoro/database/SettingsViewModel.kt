@@ -1,6 +1,8 @@
 package com.example.pomodoro.database
 
 import android.app.Application
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
@@ -10,6 +12,7 @@ import android.os.Vibrator
 import android.os.VibratorManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.res.TypedArrayUtils.getString
 import androidx.lifecycle.*
 import com.example.pomodoro.MainActivity
 import com.example.pomodoro.R
@@ -47,6 +50,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
         val settingsDao = SettingsDatabase.getInstance(application).settingsDao()
         repository = SettingsRepository(settingsDao)
         readAllData = repository.readAllData
+        createNotificationChannel()
     }
 
     //region Public methods
@@ -227,8 +231,7 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             .setContentTitle("Pomodoro for WearOS")
             .setContentText(_pomodoroState.value?.label + " time has ended!")
             .setSmallIcon(R.drawable.ic_notification)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
-            .setLocalOnly(true)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
             .setContentIntent(viewPendingIntent)
     }
 
@@ -238,6 +241,24 @@ class SettingsViewModel(application: Application) : AndroidViewModel(application
             notify(45, getNotificationBuilder().build())
         }
     }
+
+    private fun createNotificationChannel() {
+        // Create the NotificationChannel, but only on API 26+ because
+        // the NotificationChannel class is new and not in the support library
+        val context = getApplication<Application>().applicationContext
+        val name: CharSequence = "pomodoro chanel"
+        val description: String = "pomodoro chanel description"
+        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val channel = NotificationChannel(Utility.CHANNEL_ID, name, importance)
+        channel.description = description
+        // Register the channel with the system; you can't change the importance
+        // or other notification behaviors after this
+        val notificationManager: NotificationManager = context.getSystemService(
+            NotificationManager::class.java
+        )
+        notificationManager.createNotificationChannel(channel)
+    }
+
 }
 
 class SettingsViewModelFactory(

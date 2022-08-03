@@ -6,4 +6,6 @@
     -->
     <string name="device_shape">Square Device</string>
     <string name="hello_world_starter">Hello, Compose World!</string>
+    <string name="channel_name">pomodoro channel</string>
+    <string name="channel_description">pomodoro channel for wear os</string>
 </resources>
