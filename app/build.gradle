@@ -9,13 +9,13 @@ android {
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.example.pomodoro"
+        applicationId "com.senyor_o.pomodoro"
         // 26 - Second oldest Wear 2.0 version (majority of devices)
         minSdk 26
         // 30 - First Wear 3.0 version (and latest version of Wear OS)
         targetSdk 30
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
 
     }
 
