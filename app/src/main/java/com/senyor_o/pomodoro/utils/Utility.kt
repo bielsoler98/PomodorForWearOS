@@ -5,6 +5,8 @@ import java.util.concurrent.TimeUnit
 
 object Utility {
 
+    const val DATABASE_NAME = "settings_database"
+
     //time to countdown - 1hr - 60secs
     private const val TIME_FORMAT = "%02d:%02d"
 
